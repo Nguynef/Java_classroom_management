@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionListener;
 
 import vn.viettuts.qlsv.dao.RoomDao;
 import vn.viettuts.qlsv.entity.Room;
+import vn.viettuts.qlsv.view.AssignClassesView;
 import vn.viettuts.qlsv.view.RoomView;
 
 public class RoomController {
@@ -24,6 +25,7 @@ public class RoomController {
         view.deleteRoomListener(new DeleteRoomListener());
         view.clearRoomListener(new ClearRoomListener());
         view.addListRoomSelectionListener(new ListRoomSelectionListener());
+        view.addAssignClassesListener(new AssignClassesListener());
     }
 
     public void showRoomView() {
@@ -98,4 +100,11 @@ public class RoomController {
             roomView.fillRoomFromSelectedRow();
         }
     }
+    class AssignClassesListener implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+        AssignClassesView assignClassesView = new AssignClassesView();
+        new AssignClassesController(assignClassesView, roomDao);
+        assignClassesView.setVisible(true);
+    }
+}
 }

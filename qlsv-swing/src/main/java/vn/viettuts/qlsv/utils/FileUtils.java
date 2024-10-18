@@ -40,15 +40,20 @@ public class FileUtils {
      * @param clazz
      * @return
      */
-    public static Object readXMLFile(String fileName, Class<?> clazz) {
+    public static <T> T readXMLFile(String filePath, Class<T> clazz) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            throw new IllegalArgumentException(filePath + " (The system cannot find the file specified)");
+        }
+    
         try {
-            File xmlFile = new File(fileName);
-            JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            return jaxbUnmarshaller.unmarshal(xmlFile);
+            JAXBContext context = JAXBContext.newInstance(clazz);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            return clazz.cast(unmarshaller.unmarshal(file));
         } catch (JAXBException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
+
 }

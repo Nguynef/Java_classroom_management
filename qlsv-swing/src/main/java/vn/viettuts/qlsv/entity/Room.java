@@ -14,7 +14,8 @@ public class Room {
     private boolean projector;
     private boolean whiteboard;
     private boolean internet;
-
+    public Room(){
+    }
     // Constructor
     public Room(String roomName, int machineCount, boolean projector, boolean whiteboard, boolean internet) {
         this.roomName = roomName;

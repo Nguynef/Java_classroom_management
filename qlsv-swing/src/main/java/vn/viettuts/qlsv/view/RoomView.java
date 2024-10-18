@@ -14,6 +14,7 @@ public class RoomView extends JFrame {
     private JButton editRoomBtn;
     private JButton deleteRoomBtn;
     private JButton clearBtn;
+    private JButton assignClassesBtn;
     private JScrollPane jScrollPaneRoomTable;
     private JTable roomTable;
 
@@ -44,6 +45,7 @@ public class RoomView extends JFrame {
         editRoomBtn = new JButton("Edit");
         deleteRoomBtn = new JButton("Delete");
         clearBtn = new JButton("Clear");
+        assignClassesBtn = new JButton("Assign Classes");
 
         jScrollPaneRoomTable = new JScrollPane();
         roomTable = new JTable();
@@ -74,6 +76,7 @@ public class RoomView extends JFrame {
         panel.add(editRoomBtn);
         panel.add(deleteRoomBtn);
         panel.add(clearBtn);
+        panel.add(assignClassesBtn);
 
         panel.add(roomNumberLabel);
         panel.add(machineCountLabel);
@@ -120,7 +123,9 @@ public class RoomView extends JFrame {
         layout.putConstraint(SpringLayout.NORTH, deleteRoomBtn, 200, SpringLayout.NORTH, panel);
         layout.putConstraint(SpringLayout.WEST, clearBtn, 60, SpringLayout.WEST, deleteRoomBtn);
         layout.putConstraint(SpringLayout.NORTH, clearBtn, 200, SpringLayout.NORTH, panel);
-
+        layout.putConstraint(SpringLayout.WEST, assignClassesBtn, 60, SpringLayout.WEST, clearBtn);
+        layout.putConstraint(SpringLayout.NORTH, assignClassesBtn, 200, SpringLayout.NORTH, panel);
+        
         this.add(panel);
         this.pack();
         this.setTitle("Room Information");
@@ -205,5 +210,8 @@ public class RoomView extends JFrame {
 
     public void addListRoomSelectionListener(ListSelectionListener listener) {
         roomTable.getSelectionModel().addListSelectionListener(listener);
+    }
+    public void addAssignClassesListener(ActionListener listener) {
+        assignClassesBtn.addActionListener(listener);
     }
 }
