@@ -123,8 +123,8 @@ public class RoomView extends JFrame {
         layout.putConstraint(SpringLayout.NORTH, deleteRoomBtn, 200, SpringLayout.NORTH, panel);
         layout.putConstraint(SpringLayout.WEST, clearBtn, 60, SpringLayout.WEST, deleteRoomBtn);
         layout.putConstraint(SpringLayout.NORTH, clearBtn, 200, SpringLayout.NORTH, panel);
-        layout.putConstraint(SpringLayout.WEST, assignClassesBtn, 60, SpringLayout.WEST, clearBtn);
-        layout.putConstraint(SpringLayout.NORTH, assignClassesBtn, 200, SpringLayout.NORTH, panel);
+        layout.putConstraint(SpringLayout.WEST, assignClassesBtn, -180, SpringLayout.WEST, clearBtn);
+        layout.putConstraint(SpringLayout.NORTH, assignClassesBtn, 230, SpringLayout.NORTH, panel);
         
         this.add(panel);
         this.pack();
