@@ -25,5 +25,6 @@ vn\viettuts\qlsv\controller\RoomController$DeleteRoomListener.class
 vn\viettuts\qlsv\dao\ClassScheduleDao.class
 vn\viettuts\qlsv\dao\UserDao.class
 vn\viettuts\qlsv\controller\RoomController$AssignClassesListener.class
+vn\viettuts\qlsv\controller\AssignClassesController$1.class
 vn\viettuts\qlsv\dao\RoomDao$2.class
 vn\viettuts\qlsv\utils\FileUtils.class

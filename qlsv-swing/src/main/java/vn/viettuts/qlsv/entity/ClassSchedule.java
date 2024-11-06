@@ -7,8 +7,9 @@ public class ClassSchedule {
     private String startTime;
     private String endTime;
 
-    public ClassSchedule(String className, String day, String startTime, String endTime) {
+    public ClassSchedule(String className, String room , String day, String startTime, String endTime) {
         this.className = className;
+        this.className = room;
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;

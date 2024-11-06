@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <rooms>
     <room>
-        <machineCount>30</machineCount>
+        <machineCount>40</machineCount>
         <roomName>101</roomName>
-    </room>
-    <room>
-        <machineCount>50</machineCount>
-        <roomName>102</roomName>
     </room>
 </rooms>
