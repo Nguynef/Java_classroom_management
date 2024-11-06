@@ -1,9 +1,9 @@
 package vn.viettuts.qlsv.view;
-import java.awt.Dimension;
+
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import vn.viettuts.qlsv.entity.Room;
@@ -15,6 +15,7 @@ public class RoomView extends JFrame {
     private JButton deleteRoomBtn;
     private JButton clearBtn;
     private JButton assignClassesBtn;
+    private JButton searchRoomBtn;
     private JScrollPane jScrollPaneRoomTable;
     private JTable roomTable;
 
@@ -29,6 +30,11 @@ public class RoomView extends JFrame {
     private JCheckBox projectorCheckbox;
     private JCheckBox whiteboardCheckbox;
     private JCheckBox internetCheckbox;
+
+    private JTextField searchMachineCountField;
+    private JCheckBox searchProjectorCheckbox;
+    private JCheckBox searchWhiteboardCheckbox;
+    private JCheckBox searchInternetCheckbox;
 
     private String[] columnNames = new String[]{
         "Room Number", "Machine Count", "Projector", "Whiteboard", "Internet"
@@ -46,6 +52,7 @@ public class RoomView extends JFrame {
         deleteRoomBtn = new JButton("Delete");
         clearBtn = new JButton("Clear");
         assignClassesBtn = new JButton("Assign Classes");
+        searchRoomBtn = new JButton("Search Room");
 
         jScrollPaneRoomTable = new JScrollPane();
         roomTable = new JTable();
@@ -62,13 +69,18 @@ public class RoomView extends JFrame {
         whiteboardCheckbox = new JCheckBox();
         internetCheckbox = new JCheckBox();
 
+        searchMachineCountField = new JTextField(5);
+        searchProjectorCheckbox = new JCheckBox("Projector");
+        searchWhiteboardCheckbox = new JCheckBox("Whiteboard");
+        searchInternetCheckbox = new JCheckBox("Internet");
+
         roomTable.setModel(new DefaultTableModel(data, columnNames));
         jScrollPaneRoomTable.setViewportView(roomTable);
         jScrollPaneRoomTable.setPreferredSize(new Dimension(480, 300));
 
         SpringLayout layout = new SpringLayout();
         JPanel panel = new JPanel();
-        panel.setSize(800, 420);
+        panel.setSize(800, 500);
         panel.setLayout(layout);
         panel.add(jScrollPaneRoomTable);
 
@@ -89,6 +101,15 @@ public class RoomView extends JFrame {
         panel.add(projectorCheckbox);
         panel.add(whiteboardCheckbox);
         panel.add(internetCheckbox);
+
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        searchPanel.add(new JLabel("Machine Count:"));
+        searchPanel.add(searchMachineCountField);
+        searchPanel.add(searchProjectorCheckbox);
+        searchPanel.add(searchWhiteboardCheckbox);
+        searchPanel.add(searchInternetCheckbox);
+        searchPanel.add(searchRoomBtn);
+        panel.add(searchPanel);
 
         layout.putConstraint(SpringLayout.WEST, roomNumberLabel, 10, SpringLayout.WEST, panel);
         layout.putConstraint(SpringLayout.NORTH, roomNumberLabel, 10, SpringLayout.NORTH, panel);
@@ -125,11 +146,14 @@ public class RoomView extends JFrame {
         layout.putConstraint(SpringLayout.NORTH, clearBtn, 200, SpringLayout.NORTH, panel);
         layout.putConstraint(SpringLayout.WEST, assignClassesBtn, -180, SpringLayout.WEST, clearBtn);
         layout.putConstraint(SpringLayout.NORTH, assignClassesBtn, 230, SpringLayout.NORTH, panel);
+
+        layout.putConstraint(SpringLayout.WEST, searchPanel, 10, SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, searchPanel, 300, SpringLayout.NORTH, panel);
         
         this.add(panel);
         this.pack();
         this.setTitle("Room Information");
-        this.setSize(800, 420);
+        this.setSize(800, 500);
         editRoomBtn.setEnabled(false);
         deleteRoomBtn.setEnabled(false);
         addRoomBtn.setEnabled(true);
@@ -139,17 +163,18 @@ public class RoomView extends JFrame {
         JOptionPane.showMessageDialog(this, message);
     }
 
-    public void showListRooms(List<Room> list) {
-        int size = list.size();
-        Object[][] rooms = new Object[size][5];
-        for (int i = 0; i < size; i++) {
-            rooms[i][0] = list.get(i).getRoomName();
-            rooms[i][1] = list.get(i).getMachineCount();
-            rooms[i][2] = list.get(i).hasProjector();
-            rooms[i][3] = list.get(i).hasWhiteboard();
-            rooms[i][4] = list.get(i).hasInternet();
+    public void showListRooms(List<Room> rooms) {
+        DefaultTableModel model = (DefaultTableModel) roomTable.getModel();
+        model.setRowCount(0); // Xóa các hàng cũ trong bảng
+        for (Room room : rooms) {
+            model.addRow(new Object[]{
+                room.getRoomName(),
+                room.getMachineCount(),
+                room.hasProjector(),
+                room.hasWhiteboard(),
+                room.hasInternet()
+            });
         }
-        roomTable.setModel(new DefaultTableModel(rooms, columnNames));
     }
 
     public void fillRoomFromSelectedRow() {
@@ -186,8 +211,8 @@ public class RoomView extends JFrame {
             boolean internet = internetCheckbox.isSelected();
 
             return new Room(roomName, machineCount, projector, whiteboard, internet);
-        } catch (Exception e) {
-            showMessage("Invalid input: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            showMessage("Please enter valid data.");
             return null;
         }
     }
@@ -211,7 +236,34 @@ public class RoomView extends JFrame {
     public void addListRoomSelectionListener(ListSelectionListener listener) {
         roomTable.getSelectionModel().addListSelectionListener(listener);
     }
+
     public void addAssignClassesListener(ActionListener listener) {
         assignClassesBtn.addActionListener(listener);
+    }
+
+    public void addSearchRoomListener(ActionListener listener) {
+        searchRoomBtn.addActionListener(listener);
+    }
+
+    // Các phương thức cho tìm kiếm
+    public int getMachineCountCriteria() {
+        try {
+            return searchMachineCountField.getText().isEmpty() ? -1 : Integer.parseInt(searchMachineCountField.getText().trim());
+        } catch (NumberFormatException e) {
+            showMessage("Invalid machine count criteria");
+            return -1;
+        }
+    }
+
+    public boolean isProjectorRequired() {
+        return searchProjectorCheckbox.isSelected();
+    }
+
+    public boolean isWhiteboardRequired() {
+        return searchWhiteboardCheckbox.isSelected();
+    }
+
+    public boolean isInternetRequired() {
+        return searchInternetCheckbox.isSelected();
     }
 }

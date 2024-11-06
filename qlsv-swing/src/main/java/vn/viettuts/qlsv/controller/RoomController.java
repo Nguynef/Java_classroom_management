@@ -2,6 +2,7 @@ package vn.viettuts.qlsv.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -27,6 +28,9 @@ public class RoomController {
         view.clearRoomListener(new ClearRoomListener());
         view.addListRoomSelectionListener(new ListRoomSelectionListener());
         view.addAssignClassesListener(new AssignClassesListener());
+        
+        // Thêm listener cho tìm kiếm phòng
+        view.addSearchRoomListener(new SearchRoomListener());
     }
 
     public void showRoomView() {
@@ -43,11 +47,12 @@ public class RoomController {
                 if (isDuplicateRoomName(room.getRoomName())) {
                     roomView.showMessage("Room number already exists. Please use a different number.");
                     return;
-            }
+                }
 
-            roomDao.add(room);
-            roomView.showListRooms(roomDao.getListRooms());
-            roomView.showMessage("Room added successfully!");
+                roomDao.add(room);
+                roomView.showListRooms(roomDao.getListRooms());
+                roomView.showMessage("Room added successfully!");
+            }
         }
     }
 
@@ -55,13 +60,11 @@ public class RoomController {
     private boolean isDuplicateRoomName(String roomName) {
         for (Room existingRoom : roomDao.getListRooms()) {
             if (existingRoom.getRoomName().equalsIgnoreCase(roomName)) {
-                    return true;
-                }
+                return true;
             }
-            return false;
         }
+        return false;
     }
-
 
     class EditRoomListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -107,5 +110,49 @@ public class RoomController {
             assignClassesView.setVisible(true);
         }
     }
-    
+
+    // Thêm lớp SearchRoomListener để xử lý tìm kiếm
+    class SearchRoomListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            int machineCount = roomView.getMachineCountCriteria();
+            boolean projectorRequired = roomView.isProjectorRequired();
+            boolean whiteboardRequired = roomView.isWhiteboardRequired();
+            boolean internetRequired = roomView.isInternetRequired();
+
+            List<Room> matchedRooms = searchRooms(machineCount, projectorRequired, whiteboardRequired, internetRequired);
+            roomView.showListRooms(matchedRooms);
+        }
+    }
+
+    // Phương thức tìm kiếm phòng dựa trên tiêu chí người dùng cung cấp
+    private List<Room> searchRooms(int machineCount, boolean projector, boolean whiteboard, boolean internet) {
+        List<Room> allRooms = roomDao.getListRooms();
+        List<Room> matchedRooms = new ArrayList<>();
+
+        for (Room room : allRooms) {
+            boolean matches = true;
+
+            // Kiểm tra tiêu chí số lượng máy
+            if (machineCount != -1 && room.getMachineCount() < machineCount) {
+                matches = false;
+            }
+            // Kiểm tra tiêu chí máy chiếu
+            if (projector && !room.hasProjector()) {
+                matches = false;
+            }
+            // Kiểm tra tiêu chí bảng trắng
+            if (whiteboard && !room.hasWhiteboard()) {
+                matches = false;
+            }
+            // Kiểm tra tiêu chí internet
+            if (internet && !room.hasInternet()) {
+                matches = false;
+            }
+
+            if (matches) {
+                matchedRooms.add(room);
+            }
+        }
+        return matchedRooms;
+    }
 }
