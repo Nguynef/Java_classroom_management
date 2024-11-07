@@ -1,22 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package vn.viettuts.qlsv.entity;
 
-/**
- *
- * @author Lenovo
- */
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "room")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Room {
+    @XmlElement
     private String roomName;
+    
+    @XmlElement
     private int machineCount;
+    
+    @XmlElement
     private boolean projector;
+    
+    @XmlElement
     private boolean whiteboard;
+    
+    @XmlElement
     private boolean internet;
-    public Room(){
-    }
-    // Constructor
+
+    public Room() {}
+
     public Room(String roomName, int machineCount, boolean projector, boolean whiteboard, boolean internet) {
         this.roomName = roomName;
         this.machineCount = machineCount;
@@ -25,7 +33,6 @@ public class Room {
         this.internet = internet;
     }
 
-    // Getters and setters
     public String getRoomName() {
         return roomName;
     }

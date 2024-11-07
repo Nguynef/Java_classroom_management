@@ -14,7 +14,6 @@ vn\viettuts\qlsv\controller\RoomController$SearchRoomListener.class
 vn\viettuts\qlsv\entity\ClassSchedule.class
 vn\viettuts\qlsv\entity\Student.class
 vn\viettuts\qlsv\App.class
-vn\viettuts\qlsv\entity\Classroom.class
 vn\viettuts\qlsv\dao\RoomDao$1.class
 vn\viettuts\qlsv\App$1.class
 vn\viettuts\qlsv\controller\AssignClassesController$AddClassListener.class

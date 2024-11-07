@@ -1,11 +1,29 @@
 package vn.viettuts.qlsv.entity;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "classSchedule")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ClassSchedule {
+    @XmlElement
     private String className;
+
+    @XmlElement
     private String room;
+
+    @XmlElement
     private String day;
+
+    @XmlElement
     private String startTime;
+
+    @XmlElement
     private String endTime;
+
+    public ClassSchedule() {}
 
     public ClassSchedule(String className, String day, String startTime, String endTime) {
         this.className = className;
@@ -14,6 +32,7 @@ public class ClassSchedule {
         this.endTime = endTime;
     }
 
+    // Getters and setters
     public String getClassName() {
         return className;
     }

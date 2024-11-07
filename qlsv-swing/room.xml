@@ -1,79 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <rooms>
     <room>
-        <machineCount>30</machineCount>
-        <roomName>101</roomName>
-    </room>
-    <room>
-        <machineCount>30</machineCount>
-        <roomName>102</roomName>
-    </room>
-    <room>
-        <machineCount>30</machineCount>
-        <roomName>103</roomName>
-    </room>
-    <room>
-        <machineCount>30</machineCount>
-        <roomName>104</roomName>
-    </room>
-    <room>
+        <roomName>A6-101</roomName>
         <machineCount>50</machineCount>
-        <roomName>105</roomName>
+        <projector>true</projector>
+        <whiteboard>true</whiteboard>
+        <internet>true</internet>
     </room>
     <room>
+        <roomName>A6-102</roomName>
         <machineCount>50</machineCount>
-        <roomName>201</roomName>
+        <projector>true</projector>
+        <whiteboard>true</whiteboard>
+        <internet>true</internet>
     </room>
     <room>
+        <roomName>A6-103</roomName>
         <machineCount>50</machineCount>
-        <roomName>202</roomName>
+        <projector>true</projector>
+        <whiteboard>true</whiteboard>
+        <internet>true</internet>
     </room>
     <room>
+        <roomName>A6-201</roomName>
         <machineCount>50</machineCount>
-        <roomName>203</roomName>
+        <projector>false</projector>
+        <whiteboard>true</whiteboard>
+        <internet>true</internet>
     </room>
     <room>
+        <roomName>A6-202</roomName>
         <machineCount>50</machineCount>
-        <roomName>205</roomName>
+        <projector>false</projector>
+        <whiteboard>true</whiteboard>
+        <internet>true</internet>
     </room>
     <room>
+        <roomName>A6-203</roomName>
         <machineCount>50</machineCount>
-        <roomName>301</roomName>
+        <projector>false</projector>
+        <whiteboard>true</whiteboard>
+        <internet>true</internet>
     </room>
     <room>
+        <roomName>A6-301</roomName>
         <machineCount>30</machineCount>
-        <roomName>302</roomName>
+        <projector>false</projector>
+        <whiteboard>true</whiteboard>
+        <internet>true</internet>
     </room>
     <room>
+        <roomName>A6-302</roomName>
         <machineCount>30</machineCount>
-        <roomName>303</roomName>
+        <projector>true</projector>
+        <whiteboard>true</whiteboard>
+        <internet>true</internet>
     </room>
     <room>
+        <roomName>A6-303</roomName>
         <machineCount>30</machineCount>
-        <roomName>304</roomName>
-    </room>
-    <room>
-        <machineCount>30</machineCount>
-        <roomName>305</roomName>
-    </room>
-    <room>
-        <machineCount>30</machineCount>
-        <roomName>401</roomName>
-    </room>
-    <room>
-        <machineCount>30</machineCount>
-        <roomName>402</roomName>
-    </room>
-    <room>
-        <machineCount>30</machineCount>
-        <roomName>403</roomName>
-    </room>
-    <room>
-        <machineCount>30</machineCount>
-        <roomName>404</roomName>
-    </room>
-    <room>
-        <machineCount>30</machineCount>
-        <roomName>101</roomName>
+        <projector>true</projector>
+        <whiteboard>true</whiteboard>
+        <internet>true</internet>
     </room>
 </rooms>

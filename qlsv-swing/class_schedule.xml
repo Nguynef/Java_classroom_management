@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<classSchedules>
+    <classSchedule>
+        <className>DSA</className>
+        <room>A6-101</room>
+        <day>Monday</day>
+        <startTime>09:30</startTime>
+        <endTime>12:10</endTime>
+    </classSchedule>
+</classSchedules>
