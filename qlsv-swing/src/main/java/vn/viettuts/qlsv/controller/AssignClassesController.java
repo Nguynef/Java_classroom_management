@@ -18,7 +18,7 @@ public class AssignClassesController {
     private ClassScheduleDao classScheduleDao;
     private Map<String, List<ClassSchedule>> roomSchedules;
 
-    public AssignClassesController(AssignClassesView view, RoomDao dao) {
+    public AssignClassesController(AssignClassesView view, RoomDao dao, ClassScheduleDao ClashScheduleDao) {
         this.assignClassesView = view;
         this.roomDao = dao;
         this.classScheduleDao = new ClassScheduleDao();
