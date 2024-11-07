@@ -10,7 +10,6 @@ vn\viettuts\qlsv\controller\LoginController.class
 vn\viettuts\qlsv\controller\RoomController$AddRoomListener.class
 vn\viettuts\qlsv\dao\RoomDao.class
 vn\viettuts\qlsv\entity\RoomXML.class
-vn\viettuts\qlsv\controller\RoomController$SearchRoomListener.class
 vn\viettuts\qlsv\entity\ClassSchedule.class
 vn\viettuts\qlsv\entity\Student.class
 vn\viettuts\qlsv\App.class
@@ -26,6 +25,5 @@ vn\viettuts\qlsv\controller\RoomController$DeleteRoomListener.class
 vn\viettuts\qlsv\dao\ClassScheduleDao.class
 vn\viettuts\qlsv\dao\UserDao.class
 vn\viettuts\qlsv\controller\RoomController$AssignClassesListener.class
-vn\viettuts\qlsv\controller\AssignClassesController$1.class
 vn\viettuts\qlsv\dao\RoomDao$2.class
 vn\viettuts\qlsv\utils\FileUtils.class

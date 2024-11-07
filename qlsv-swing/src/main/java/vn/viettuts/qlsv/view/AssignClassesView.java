@@ -53,7 +53,7 @@ public class AssignClassesView extends JFrame {
         panel.add(new JLabel("End Time (HH:MM):"));
         panel.add(endTimeField);
         panel.add(addClassBtn);
-        
+
         getContentPane().add(panel, BorderLayout.NORTH);
         getContentPane().add(jScrollPaneClassesTable, BorderLayout.CENTER);
         pack();
@@ -70,8 +70,9 @@ public class AssignClassesView extends JFrame {
         return classNameField.getText();
     }
 
+    // Returns the selected room name
     public String getSelectedRoom() {
-        return (String) roomComboBox.getSelectedItem();
+        return (String) roomComboBox.getSelectedItem();  // Ensure it returns the room name, not the room number
     }
 
     public String getSelectedDay() {
@@ -95,7 +96,7 @@ public class AssignClassesView extends JFrame {
     public void setRoomOptions(List<String> roomNames) {
         roomComboBox.removeAllItems();
         for (String roomName : roomNames) {
-            roomComboBox.addItem(roomName);
+            roomComboBox.addItem(roomName);  // Add room name to combo box
         }
     }
 
@@ -110,7 +111,7 @@ public class AssignClassesView extends JFrame {
         for (int i = 0; i < classSchedules.size(); i++) {
             ClassSchedule schedule = classSchedules.get(i);
             tableData[i][0] = schedule.getClassName();
-            tableData[i][1] = schedule.getRoom();
+            tableData[i][1] = schedule.getRoom();  // Ensure room name is shown in the table
             tableData[i][2] = schedule.getDay();
             tableData[i][3] = schedule.getStartTime();
             tableData[i][4] = schedule.getEndTime();

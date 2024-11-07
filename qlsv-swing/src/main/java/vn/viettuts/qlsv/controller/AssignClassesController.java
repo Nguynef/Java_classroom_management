@@ -1,96 +1,96 @@
 package vn.viettuts.qlsv.controller;
 
-import vn.viettuts.qlsv.view.AssignClassesView;
 import vn.viettuts.qlsv.dao.ClassScheduleDao;
 import vn.viettuts.qlsv.dao.RoomDao;
 import vn.viettuts.qlsv.entity.ClassSchedule;
-import vn.viettuts.qlsv.entity.Room;
+import vn.viettuts.qlsv.view.AssignClassesView;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
+/**
+ * Controller for managing the assignment of classes to rooms.
+ */
 public class AssignClassesController {
     private AssignClassesView assignClassesView;
     private RoomDao roomDao;
     private ClassScheduleDao classScheduleDao;
+    private Map<String, List<ClassSchedule>> roomSchedules;
 
-    public AssignClassesController(AssignClassesView view, RoomDao roomDao, ClassScheduleDao classScheduleDao) {
+    public AssignClassesController(AssignClassesView view, RoomDao dao) {
         this.assignClassesView = view;
-        this.roomDao = roomDao;
-        this.classScheduleDao = classScheduleDao;
+        this.roomDao = dao;
+        this.classScheduleDao = new ClassScheduleDao();
+        this.roomSchedules = new HashMap<>();
+        view.addClassListener(new AddClassListener());
+        view.setClassSchedules(classScheduleDao.getClassSchedules()); // This will now work correctly
+        loadRoomData();
+}
 
-        // Lấy danh sách tên các phòng từ RoomDao và hiển thị trong roomComboBox
-        List<String> roomNames = roomDao.getListRooms().stream()
-                                          .map(Room::getRoomName)
-                                          .collect(Collectors.toList());
+    private void loadRoomData() {
+        List<String> roomNames = new ArrayList<>();
+        roomDao.getListRooms().forEach(room -> roomNames.add(room.getRoomName()));
         assignClassesView.setRoomOptions(roomNames);
-
-        // Hiển thị danh sách lịch lớp học
-        assignClassesView.setClassSchedules(classScheduleDao.getClassSchedules());
-        assignClassesView.addClassListener(new AddClassListener());
     }
 
-    private class AddClassListener implements ActionListener {
+    class AddClassListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String className = assignClassesView.getClassName();
-            String room = assignClassesView.getSelectedRoom();
+            String roomName = assignClassesView.getSelectedRoom();
             String day = assignClassesView.getSelectedDay();
             String startTime = assignClassesView.getStartTime();
             String endTime = assignClassesView.getEndTime();
 
-            if (isDuplicateClassName(className)) {
-                assignClassesView.showMessage("Class name already exists. Please use a different name.");
+            if (className.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
+                assignClassesView.showMessage("All fields are required.");
                 return;
             }
 
-            if (!isValidTimeFormat(startTime) || !isValidTimeFormat(endTime)) {
-                assignClassesView.showMessage("Invalid time format. Please use HH:mm format.");
-                return;
-            }
-            if (!isTimeOrderValid(startTime, endTime)) {
-                assignClassesView.showMessage("End time must be after start time.");
+            // Check for time conflicts
+            if (!isTimeSlotAvailable(roomName, day, startTime, endTime)) {
+                assignClassesView.showMessage("The time slot is already taken.");
                 return;
             }
 
-            ClassSchedule newSchedule = new ClassSchedule(className, room, day, startTime, endTime);
-            classScheduleDao.addClassSchedule(newSchedule);
-            assignClassesView.setClassSchedules(classScheduleDao.getClassSchedules());
+            // Add the new class
+            ClassSchedule newClassSchedule = new ClassSchedule(className, day, startTime, endTime);
+            newClassSchedule.setRoom(roomName);
+            roomSchedules.computeIfAbsent(roomName, k -> new ArrayList<>()).add(newClassSchedule);
+            classScheduleDao.addClassSchedule(newClassSchedule);
+            updateClassesTable();
+
             assignClassesView.showMessage("Class added successfully.");
         }
+    }
 
-        private boolean isDuplicateClassName(String className) {
-            for (ClassSchedule schedule : classScheduleDao.getClassSchedules()) {
-                if (schedule.getClassName().equalsIgnoreCase(className)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private boolean isValidTimeFormat(String time) {
-            return time.matches("([01]?\\d|2[0-3]):[0-5]\\d");
-        }
-
-        private boolean isTimeOrderValid(String startTime, String endTime) {
-            String[] start = startTime.split(":");
-            String[] end = endTime.split(":");
-
-            int startHour = Integer.parseInt(start[0]);
-            int startMinute = Integer.parseInt(start[1]);
-            int endHour = Integer.parseInt(end[0]);
-            int endMinute = Integer.parseInt(end[1]);
-
-            if (endHour > startHour) {
-                return true;
-            } else if (endHour == startHour) {
-                return endMinute > startMinute;
-            } else {
+    private boolean isTimeSlotAvailable(String room, String day, String startTime, String endTime) {
+        List<ClassSchedule> schedules = roomSchedules.getOrDefault(room, Collections.emptyList());
+        for (ClassSchedule schedule : schedules) {
+            if (schedule.getDay().equals(day) && isOverlapping(schedule.getStartTime(), schedule.getEndTime(), startTime, endTime)) {
                 return false;
             }
         }
+        return true;
+    }
+
+    private boolean isOverlapping(String start1, String end1, String start2, String end2) {
+        return !(end1.compareTo(start2) <= 0 || start1.compareTo(end2) >= 0);
+    }
+
+    private void updateClassesTable() {
+        List<ClassSchedule> allSchedules = classScheduleDao.getClassSchedules();
+        allSchedules.sort(Comparator.comparing(ClassSchedule::getDay).thenComparing(ClassSchedule::getStartTime));
+        Object[][] data = new Object[allSchedules.size()][5];
+        for (int i = 0; i < allSchedules.size(); i++) {
+            ClassSchedule schedule = allSchedules.get(i);
+            data[i][0] = schedule.getClassName();
+            data[i][1] = schedule.getRoom();
+            data[i][2] = schedule.getDay();
+            data[i][3] = schedule.getStartTime();
+            data[i][4] = schedule.getEndTime();
+        }
+        assignClassesView.updateClassesTable(data);
     }
 }

@@ -140,4 +140,10 @@ public class RoomDao {
     public void setListRooms(List<Room> listRooms) {
         this.listRooms = listRooms;
     }
+    public Room findRoomByName(String roomName) {
+        return getListRooms().stream()
+                         .filter(room -> room.getRoomName().equals(roomName))
+                         .findFirst()
+                         .orElse(null);
+    }
 }
