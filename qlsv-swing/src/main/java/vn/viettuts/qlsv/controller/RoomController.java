@@ -47,6 +47,7 @@ public class RoomController {
     public void showRoomView() {
         List<Room> roomList = roomDao.getListRooms();
         roomView.setVisible(true);
+        roomView.setLocationRelativeTo(null);
         roomView.showListRooms(roomList);
     }
 
@@ -118,6 +119,7 @@ public class RoomController {
             AssignClassesView assignClassesView = new AssignClassesView();
             // Truyền cả roomDao và classScheduleDao
             new AssignClassesController(assignClassesView, roomDao, classScheduleDao); 
+            assignClassesView.setLocationRelativeTo(null);
             assignClassesView.setVisible(true);
         }
     }
@@ -173,6 +175,7 @@ public class RoomController {
         chartFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         chartFrame.add(chartPanel);
         chartFrame.pack();
+        chartFrame.setLocationRelativeTo(null);
         chartFrame.setVisible(true);
     }
     private void exportReport() {

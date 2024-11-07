@@ -21,6 +21,7 @@ public class LoginController {
     
     public void showLoginView() {
         loginView.setVisible(true);
+        loginView.setLocationRelativeTo(null);
     }
     
     /**
