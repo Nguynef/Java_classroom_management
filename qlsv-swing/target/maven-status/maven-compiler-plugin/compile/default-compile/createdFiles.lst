@@ -1,6 +1,8 @@
 vn\viettuts\qlsv\entity\Room.class
 vn\viettuts\qlsv\view\RoomView.class
 vn\viettuts\qlsv\controller\RoomController$ListRoomSelectionListener.class
+vn\viettuts\qlsv\service\ReportService.class
+vn\viettuts\qlsv\service\ChartService.class
 vn\viettuts\qlsv\controller\LoginController$LoginListener.class
 vn\viettuts\qlsv\controller\RoomController.class
 vn\viettuts\qlsv\entity\ClassScheduleXML.class
@@ -26,4 +28,5 @@ vn\viettuts\qlsv\dao\ClassScheduleDao.class
 vn\viettuts\qlsv\dao\UserDao.class
 vn\viettuts\qlsv\controller\RoomController$AssignClassesListener.class
 vn\viettuts\qlsv\dao\RoomDao$2.class
+vn\viettuts\qlsv\service\StatisticsService.class
 vn\viettuts\qlsv\utils\FileUtils.class

@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import vn.viettuts.qlsv.dao.RoomDao;
@@ -11,17 +13,26 @@ import vn.viettuts.qlsv.dao.ClassScheduleDao; // Import ClassScheduleDao
 import vn.viettuts.qlsv.entity.Room;
 import vn.viettuts.qlsv.view.AssignClassesView;
 import vn.viettuts.qlsv.view.RoomView;
+import vn.viettuts.qlsv.service.*;
 
 public class RoomController {
     private RoomDao roomDao;
     private ClassScheduleDao classScheduleDao; // Thêm ClassScheduleDao
     private RoomView roomView;
+    private ChartService chartService;
+    private ReportService reportService;
 
     public RoomController(RoomView view) {
         this.roomView = view;
         this.roomDao = new RoomDao();
         this.classScheduleDao = new ClassScheduleDao(); // Khởi tạo ClassScheduleDao
-
+        this.chartService = new ChartService();
+        this.reportService = new ReportService();
+        
+        this.roomView.addShowChartListener(e -> showChart());
+        this.roomView.addExportReportListener(e -> exportReport());
+        
+        
         view.addAddRoomListener(new AddRoomListener());
         view.editRoomListener(new EditRoomListener());
         view.deleteRoomListener(new DeleteRoomListener());
@@ -154,5 +165,19 @@ public class RoomController {
             }
         }
         return matchedRooms;
+    }
+    private void showChart() {
+        List<Room> rooms = roomDao.getListRooms();
+        JPanel chartPanel = chartService.createAmenitiesChart(rooms);
+        JFrame chartFrame = new JFrame("Amenities Chart");
+        chartFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        chartFrame.add(chartPanel);
+        chartFrame.pack();
+        chartFrame.setVisible(true);
+    }
+    private void exportReport() {
+        List<Room> rooms = roomDao.getListRooms();
+        reportService.generateReport(rooms);
+        roomView.showMessage("Report exported to RoomStatisticsReport.pdf");
     }
 }

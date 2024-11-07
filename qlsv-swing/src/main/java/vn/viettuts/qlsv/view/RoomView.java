@@ -16,6 +16,8 @@ public class RoomView extends JFrame {
     private JButton clearBtn;
     private JButton assignClassesBtn;
     private JButton searchRoomBtn;
+    private JButton showChartBtn;
+    private JButton exportReportBtn;
     private JScrollPane jScrollPaneRoomTable;
     private JTable roomTable;
 
@@ -53,6 +55,8 @@ public class RoomView extends JFrame {
         clearBtn = new JButton("Clear");
         assignClassesBtn = new JButton("Assign Classes");
         searchRoomBtn = new JButton("Search Room");
+        showChartBtn = new JButton("Show chart");
+        exportReportBtn = new JButton("Export PDF");
 
         jScrollPaneRoomTable = new JScrollPane();
         roomTable = new JTable();
@@ -89,6 +93,8 @@ public class RoomView extends JFrame {
         panel.add(deleteRoomBtn);
         panel.add(clearBtn);
         panel.add(assignClassesBtn);
+        panel.add(showChartBtn);
+        panel.add(exportReportBtn);
 
         panel.add(roomNumberLabel);
         panel.add(machineCountLabel);
@@ -146,7 +152,11 @@ public class RoomView extends JFrame {
         layout.putConstraint(SpringLayout.NORTH, clearBtn, 200, SpringLayout.NORTH, panel);
         layout.putConstraint(SpringLayout.WEST, assignClassesBtn, -180, SpringLayout.WEST, clearBtn);
         layout.putConstraint(SpringLayout.NORTH, assignClassesBtn, 230, SpringLayout.NORTH, panel);
-
+        layout.putConstraint(SpringLayout.WEST, showChartBtn,20 ,SpringLayout.WEST, panel);
+        layout.putConstraint(SpringLayout.NORTH, showChartBtn, 20, SpringLayout.SOUTH, assignClassesBtn);
+        layout.putConstraint(SpringLayout.WEST, exportReportBtn, 60, SpringLayout.EAST, showChartBtn);
+        layout.putConstraint(SpringLayout.NORTH,exportReportBtn, 20, SpringLayout.SOUTH, assignClassesBtn);
+        
         layout.putConstraint(SpringLayout.WEST, searchPanel, 10, SpringLayout.WEST, panel);
         layout.putConstraint(SpringLayout.NORTH, searchPanel, 300, SpringLayout.NORTH, panel);
         
@@ -265,5 +275,12 @@ public class RoomView extends JFrame {
 
     public boolean isInternetRequired() {
         return searchInternetCheckbox.isSelected();
+    }
+    
+    public void addShowChartListener(ActionListener listener){
+        showChartBtn.addActionListener(listener);
+    }
+    public void addExportReportListener(ActionListener listener){
+        exportReportBtn.addActionListener(listener);
     }
 }

@@ -63,4 +63,25 @@
         <whiteboard>true</whiteboard>
         <internet>true</internet>
     </room>
+    <room>
+        <roomName>A6-401</roomName>
+        <machineCount>30</machineCount>
+        <projector>false</projector>
+        <whiteboard>false</whiteboard>
+        <internet>false</internet>
+    </room>
+    <room>
+        <roomName>A6-402</roomName>
+        <machineCount>40</machineCount>
+        <projector>false</projector>
+        <whiteboard>false</whiteboard>
+        <internet>false</internet>
+    </room>
+    <room>
+        <roomName>A6-403</roomName>
+        <machineCount>50</machineCount>
+        <projector>false</projector>
+        <whiteboard>false</whiteboard>
+        <internet>false</internet>
+    </room>
 </rooms>
