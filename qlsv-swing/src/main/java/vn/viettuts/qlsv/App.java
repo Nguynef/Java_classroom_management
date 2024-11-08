@@ -7,6 +7,7 @@ import vn.viettuts.qlsv.view.LoginView;
 
 public class App {
     public static void main(String[] args) {
+        System.setProperty("com.sun.xml.bind.v2.runtime.reflect.opt.Injector.noOptimize", "true");
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
