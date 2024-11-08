@@ -76,6 +76,14 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>javax.xml.bind:jaxb-api</include>
+                                    <include>org.glassfish.jaxb:jaxb-runtime</include>
+                                    <include>com.sun.xml.bind:jaxb-impl</include>
+                                    <include>javax.activation:activation</include>
+                                </includes>
+                            </artifactSet>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>vn.viettuts.qlsv.App</mainClass> <!-- Thay bằng tên lớp chính xác của bạn -->

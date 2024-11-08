@@ -9,7 +9,8 @@ import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 public class UserDao {
-    private static final String USER_XML_FILE = "userXML.xml";
+    private static final String USER_XML_FILE = System.getProperty("java.io.tmpdir") + File.separator + "userXML.xml";
+
 
     // Lưu đối tượng User vào file XML
     public void saveUserToXML(User user) {
@@ -18,6 +19,7 @@ public class UserDao {
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(user, new File(USER_XML_FILE));
+            //System.out.println("User data saved to " + USER_XML_FILE);
         } catch (JAXBException e) {
             e.printStackTrace();
         }
