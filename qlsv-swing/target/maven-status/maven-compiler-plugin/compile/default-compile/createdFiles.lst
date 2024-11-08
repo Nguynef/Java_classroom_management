@@ -4,6 +4,7 @@ vn\viettuts\qlsv\controller\RoomController$ListRoomSelectionListener.class
 vn\viettuts\qlsv\service\ReportService.class
 vn\viettuts\qlsv\service\ChartService.class
 vn\viettuts\qlsv\controller\LoginController$LoginListener.class
+vn\viettuts\qlsv\controller\AssignClassesController$RemoveClassListener.class
 vn\viettuts\qlsv\controller\RoomController.class
 vn\viettuts\qlsv\entity\ClassScheduleXML.class
 vn\viettuts\qlsv\view\LoginView.class

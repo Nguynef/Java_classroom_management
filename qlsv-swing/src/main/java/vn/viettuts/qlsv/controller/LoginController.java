@@ -16,6 +16,7 @@ public class LoginController {
     public LoginController(LoginView view) {
         this.loginView = view;
         this.userDao = new UserDao();
+        //this.userDao.initializeDefaultUser();
         view.addLoginListener(new LoginListener());
     }
     

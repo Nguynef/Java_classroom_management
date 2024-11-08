@@ -18,15 +18,18 @@ public class AssignClassesController {
     private ClassScheduleDao classScheduleDao;
     private Map<String, List<ClassSchedule>> roomSchedules;
 
-    public AssignClassesController(AssignClassesView view, RoomDao dao, ClassScheduleDao ClashScheduleDao) {
+    public AssignClassesController(AssignClassesView view, RoomDao dao, ClassScheduleDao classScheduleDao) {
         this.assignClassesView = view;
         this.roomDao = dao;
-        this.classScheduleDao = new ClassScheduleDao();
+        this.classScheduleDao = classScheduleDao;
         this.roomSchedules = new HashMap<>();
+        
         view.addClassListener(new AddClassListener());
-        view.setClassSchedules(classScheduleDao.getClassSchedules()); // This will now work correctly
+        view.addRemoveClassListener(new RemoveClassListener()); // Add listener for removing classes
+        view.setClassSchedules(classScheduleDao.getClassSchedules());
+        
         loadRoomData();
-}
+    }
 
     private void loadRoomData() {
         List<String> roomNames = new ArrayList<>();
@@ -62,6 +65,31 @@ public class AssignClassesController {
             updateClassesTable();
 
             assignClassesView.showMessage("Class added successfully.");
+        }
+    }
+
+    class RemoveClassListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int selectedIndex = assignClassesView.getSelectedClassIndex();
+
+            if (selectedIndex == -1) {
+                assignClassesView.showMessage("Please select a class to remove.");
+                return;
+            }
+
+            // Get the selected class schedule and remove it
+            List<ClassSchedule> allSchedules = classScheduleDao.getClassSchedules();
+            if (selectedIndex < allSchedules.size()) {
+                ClassSchedule scheduleToRemove = allSchedules.get(selectedIndex);
+                classScheduleDao.removeClassSchedule(scheduleToRemove);
+                roomSchedules.get(scheduleToRemove.getRoom()).remove(scheduleToRemove);
+
+                updateClassesTable();
+                assignClassesView.showMessage("Class removed successfully.");
+            } else {
+                assignClassesView.showMessage("Error: Selected class not found.");
+            }
         }
     }
 

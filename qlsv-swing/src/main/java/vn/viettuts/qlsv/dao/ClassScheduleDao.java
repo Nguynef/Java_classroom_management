@@ -60,4 +60,8 @@ public class ClassScheduleDao {
             throw new RuntimeException("Unable to create the default XML file: " + filePath);
         }
     }
+    public void removeClassSchedule(ClassSchedule schedule) {
+        classSchedules.remove(schedule);
+        writeClassSchedules(classSchedules); // Cập nhật file XML sau khi xóa
+    }
 }

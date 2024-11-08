@@ -16,6 +16,7 @@ public class AssignClassesView extends JFrame {
     private JTextField startTimeField;
     private JTextField endTimeField;
     private JButton addClassBtn;
+    private JButton removeClassBtn; // Button for removing a class
     private JTable classesTable;
     private JScrollPane jScrollPaneClassesTable;
 
@@ -36,12 +37,14 @@ public class AssignClassesView extends JFrame {
         startTimeField = new JTextField(5);
         endTimeField = new JTextField(5);
         addClassBtn = new JButton("Add Class");
+        removeClassBtn = new JButton("Remove Class"); // Initialize remove button
         classesTable = new JTable();
         jScrollPaneClassesTable = new JScrollPane(classesTable);
         classesTable.setModel(new DefaultTableModel(data, columnNames));
 
         jScrollPaneClassesTable.setPreferredSize(new Dimension(480, 300));
-        JPanel panel = new JPanel(new GridLayout(6, 2, 5, 5));
+
+        JPanel panel = new JPanel(new GridLayout(7, 2, 5, 5)); // Adjust layout to add remove button
         panel.add(new JLabel("Class Name:"));
         panel.add(classNameField);
         panel.add(new JLabel("Room:"));
@@ -53,6 +56,7 @@ public class AssignClassesView extends JFrame {
         panel.add(new JLabel("End Time (HH:MM):"));
         panel.add(endTimeField);
         panel.add(addClassBtn);
+        panel.add(removeClassBtn); // Add remove button to the panel
 
         getContentPane().add(panel, BorderLayout.NORTH);
         getContentPane().add(jScrollPaneClassesTable, BorderLayout.CENTER);
@@ -65,14 +69,18 @@ public class AssignClassesView extends JFrame {
         addClassBtn.addActionListener(listener);
     }
 
+    // Method to add listener for removing a class
+    public void addRemoveClassListener(ActionListener listener) {
+        removeClassBtn.addActionListener(listener);
+    }
+
     // Getter methods for retrieving user input
     public String getClassName() {
         return classNameField.getText();
     }
 
-    // Returns the selected room name
     public String getSelectedRoom() {
-        return (String) roomComboBox.getSelectedItem();  // Ensure it returns the room name, not the room number
+        return (String) roomComboBox.getSelectedItem();
     }
 
     public String getSelectedDay() {
@@ -96,7 +104,7 @@ public class AssignClassesView extends JFrame {
     public void setRoomOptions(List<String> roomNames) {
         roomComboBox.removeAllItems();
         for (String roomName : roomNames) {
-            roomComboBox.addItem(roomName);  // Add room name to combo box
+            roomComboBox.addItem(roomName);
         }
     }
 
@@ -105,13 +113,18 @@ public class AssignClassesView extends JFrame {
         JOptionPane.showMessageDialog(this, message);
     }
 
-    // New method to set class schedules in the table
+    // Method to get the selected class index for removal
+    public int getSelectedClassIndex() {
+        return classesTable.getSelectedRow();
+    }
+
+    // Method to set class schedules in the table
     public void setClassSchedules(List<ClassSchedule> classSchedules) {
         Object[][] tableData = new Object[classSchedules.size()][5];
         for (int i = 0; i < classSchedules.size(); i++) {
             ClassSchedule schedule = classSchedules.get(i);
             tableData[i][0] = schedule.getClassName();
-            tableData[i][1] = schedule.getRoom();  // Ensure room name is shown in the table
+            tableData[i][1] = schedule.getRoom();
             tableData[i][2] = schedule.getDay();
             tableData[i][3] = schedule.getStartTime();
             tableData[i][4] = schedule.getEndTime();
