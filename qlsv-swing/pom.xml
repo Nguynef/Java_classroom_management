@@ -95,7 +95,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>vn.viettuts.qlsv.App</mainClass> <!-- Thay bằng tên lớp chính xác của bạn -->
+                            <mainClass>vn.viettuts.qlsv.App</mainClass> 
                         </manifest>
                     </archive>
                 </configuration>

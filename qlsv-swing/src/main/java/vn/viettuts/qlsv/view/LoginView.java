@@ -22,6 +22,8 @@ public class LoginView extends JFrame implements ActionListener {
     private JPasswordField passwordField;
     private JTextField userNameField;
     private JButton loginBtn;
+    private JButton registerBtn;
+    
 
     public LoginView() {
         initComponents();
@@ -34,9 +36,12 @@ public class LoginView extends JFrame implements ActionListener {
         userNameField = new JTextField(15);
         passwordField = new JPasswordField(15);
         loginBtn = new JButton();
+        registerBtn = new JButton("Register");
+        
 
         loginBtn.setText("Login");
         loginBtn.addActionListener(this);
+        registerBtn.addActionListener(this);
 
         // tạo spring layout
         SpringLayout layout = new SpringLayout();
@@ -49,6 +54,7 @@ public class LoginView extends JFrame implements ActionListener {
         panel.add(userNameField);
         panel.add(passwordField);
         panel.add(loginBtn);
+        panel.add(registerBtn);
 
         // cài đặt vị trí các thành phần trên màn hình login
         layout.putConstraint(SpringLayout.WEST, userNameLabel, 20, SpringLayout.WEST, panel);
@@ -61,7 +67,9 @@ public class LoginView extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, passwordField, 105, SpringLayout.NORTH, panel);
         layout.putConstraint(SpringLayout.WEST, loginBtn, 80, SpringLayout.WEST, passwordlabel);
         layout.putConstraint(SpringLayout.NORTH, loginBtn, 130, SpringLayout.NORTH, panel);
-
+        layout.putConstraint(SpringLayout.WEST, registerBtn, 80, SpringLayout.WEST, passwordlabel);
+        layout.putConstraint(SpringLayout.NORTH, registerBtn, 160, SpringLayout.NORTH, panel);
+        
         // add panel tới JFrame
         this.add(panel);
         this.pack();
@@ -85,5 +93,8 @@ public class LoginView extends JFrame implements ActionListener {
     
     public void addLoginListener(ActionListener listener) {
         loginBtn.addActionListener(listener);
+    }
+    public void  addRegisterListener(ActionListener listener){
+        registerBtn.addActionListener(listener);
     }
 }

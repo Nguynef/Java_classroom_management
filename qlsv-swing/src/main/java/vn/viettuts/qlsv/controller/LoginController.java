@@ -2,6 +2,7 @@ package vn.viettuts.qlsv.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 import vn.viettuts.qlsv.dao.UserDao;
 import vn.viettuts.qlsv.entity.User;
@@ -18,6 +19,7 @@ public class LoginController {
         this.userDao = new UserDao();
         //this.userDao.initializeDefaultUser();
         view.addLoginListener(new LoginListener());
+        view.addRegisterListener(new RegisterListener());
     }
     
     public void showLoginView() {
@@ -43,7 +45,26 @@ public class LoginController {
                 loginView.setVisible(false);
             } else {
                 loginView.showMessage("username hoặc password không đúng.");
+                /*RoomView = new RoomView();
+                RoomController studentController = new RoomController(RoomView);
+                studentController.showRoomView();
+                loginView.setVisible(false);*/
             }
         }
     }
+    class RegisterListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String username = JOptionPane.showInputDialog("Enter new username:");
+            String password = JOptionPane.showInputDialog("Enter new password:");
+
+            if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) {
+                User newUser = new User(username, password);
+                userDao.saveUserToXML(newUser);
+                loginView.showMessage("User registered successfully!");
+            } else {
+                loginView.showMessage("Registration failed. Username and password cannot be empty.");
+            }
+        }
+    }  
 }

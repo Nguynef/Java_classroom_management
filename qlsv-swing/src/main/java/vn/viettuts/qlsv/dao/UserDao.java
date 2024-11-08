@@ -48,12 +48,12 @@ public class UserDao {
         }
         return false;
     }
-    public void initializeDefaultUser() {
+    /*public void initializeDefaultUser() {
         File file = new File(USER_XML_FILE);
         if (!file.exists()) {
             User defaultUser = new User("admin", "admin");
             saveUserToXML(defaultUser);
         }
-    }
+    }*/
     
 }
