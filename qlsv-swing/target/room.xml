@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<rooms/>
+<rooms>
+    <room>
+        <roomName>A6-101</roomName>
+        <machineCount>30</machineCount>
+        <projector>true</projector>
+        <whiteboard>true</whiteboard>
+        <internet>true</internet>
+    </room>
+</rooms>

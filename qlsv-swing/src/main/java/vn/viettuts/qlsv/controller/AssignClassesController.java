@@ -8,7 +8,7 @@ import vn.viettuts.qlsv.view.AssignClassesView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
-
+import java.util.regex.Pattern;
 /**
  * Controller for managing the assignment of classes to rooms.
  */
@@ -38,6 +38,7 @@ public class AssignClassesController {
     }
 
     class AddClassListener implements ActionListener {
+        private final Pattern timePattern = Pattern.compile("^(?:[01]\\d|2[0-3]):[0-5]\\d$");
         @Override
         public void actionPerformed(ActionEvent e) {
             String className = assignClassesView.getClassName();
@@ -50,7 +51,10 @@ public class AssignClassesController {
                 assignClassesView.showMessage("All fields are required.");
                 return;
             }
-
+            if (!isValidTimeFormat(startTime) || !isValidTimeFormat(endTime)) {
+                assignClassesView.showMessage("Invalid time format. Please enter time in HH:MM format.");
+                return;
+            }
             // Check for time conflicts
             if (!isTimeSlotAvailable(roomName, day, startTime, endTime)) {
                 assignClassesView.showMessage("The time slot is already taken.");
@@ -65,6 +69,9 @@ public class AssignClassesController {
             updateClassesTable();
 
             assignClassesView.showMessage("Class added successfully.");
+        }
+        private boolean isValidTimeFormat(String time) {
+            return timePattern.matcher(time).matches();
         }
     }
 
