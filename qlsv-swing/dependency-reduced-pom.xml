@@ -18,6 +18,14 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <artifactSet>
+                <includes>
+                  <include>javax.xml.bind:jaxb-api</include>
+                  <include>org.glassfish.jaxb:jaxb-runtime</include>
+                  <include>com.sun.xml.bind:jaxb-impl</include>
+                  <include>javax.activation:activation</include>
+                </includes>
+              </artifactSet>
               <transformers>
                 <transformer>
                   <mainClass>vn.viettuts.qlsv.App</mainClass>
@@ -39,6 +47,29 @@
           </archive>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>vn.viettuts.qlsv.App</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -47,6 +78,18 @@
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jfree</groupId>
+      <artifactId>jfreechart</artifactId>
+      <version>1.5.5</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.jasperreports</groupId>
+      <artifactId>jasperreports</artifactId>
+      <version>7.0.1</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
   <properties>
