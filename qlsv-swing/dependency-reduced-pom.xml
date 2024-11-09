@@ -20,10 +20,9 @@
             <configuration>
               <artifactSet>
                 <includes>
-                  <include>javax.xml.bind:jaxb-api</include>
+                  <include>jakarta.xml.bind:jakarta.xml.bind-api</include>
                   <include>org.glassfish.jaxb:jaxb-runtime</include>
-                  <include>com.sun.xml.bind:jaxb-impl</include>
-                  <include>javax.activation:activation</include>
+                  <include>com.sun.activation:jakarta.activation</include>
                 </includes>
               </artifactSet>
               <transformers>
@@ -76,8 +75,14 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.13.2</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>hamcrest-core</artifactId>
+          <groupId>org.hamcrest</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jfree</groupId>
@@ -93,8 +98,8 @@
     </dependency>
   </dependencies>
   <properties>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>
